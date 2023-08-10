@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+
+:root {
+	--dark-gray: #1a2a32;
+	--gray: #2e4756;
+	--turquoise: #3cc4bf;
+	--yellow: #f2b147;
+	--light-gray: #d3d3d3;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	list-style: none;
+	font-family: "Montserrat", sans-serif;
+	border: none;
+}
+
+html,
+body {
+	height: 100%;
+	background-color: var(--dark-gray);
+}
+
+body {
+	font-size: 16px;
+	padding: 80px 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Shared Utility Classes */
+
+button:hover {
+	cursor: pointer;
+	opacity: 90%;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.yellow {
+	color: var(--yellow);
+}
+
+.turquoise {
+	color: var(--turquoise);
+}
+
+.shadow {
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+		rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.border {
+	border: 1px solid rgba(211, 211, 211, 0.4) !important;
+}
+
+/* Layout & Styling */
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, 25vw);
+	grid-template-rows: 8vw repeat(3, 25vw) 10vw;
+	gap: 15px;
+}
+
+@media (min-width: 640px) {
+	.grid {
+		grid-template-columns: repeat(3, 160px);
+		grid-template-rows: 50px repeat(3, 160px) 60px;
+		gap: 20px;
+	}
+}
+
+.turn {
+	grid-column: 1 / 3;
+	align-self: center;
+
+	display: flex;
+}
+
+.actions {
+}
+
+.actions button {
+	width: 100%;
+	height: 100%;
+}
+
+.square {
+	background-color: var(--gray);
+	border-radius: 10px;
+}
+
+.square:hover {
+	cursor: pointer;
+	opacity: 90%;
+}
+
+.p1-score {
+	background-color: var(--turquoise);
+}
+
+.ties {
+	background-color: var(--light-gray);
+}
+
+.p2-score {
+	background-color: var(--yellow);
+}
+
+/* Footer styles */
+
+footer {
+	font-size: 0.8rem;
+	color: white;
+	margin-top: 40px;
+}
+
+footer a {
+	color: var(--turquoise);
+}
+
+@media (min-width: 640px) {
+	footer {
+		font-size: 1rem;
+		margin-top: 60px;
+	}
+}

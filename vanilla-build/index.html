@@ -4,28 +4,56 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Vanilla JS T3</title>
-		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script
+			src="https://kit.fontawesome.com/5eb12ddfe0.js"
+			crossorigin="anonymous"
+		></script>
 	</head>
 	<body>
 		<main>
 			<div class="grid">
-				<div class="turn"></div>
-				<div class="menu"></div>
+				<div class="turn turquoise">
+					<i class="fa-solid fa-x"></i>
+					<p>Player 1, you're up!</p>
+				</div>
+				<div class="actions">
+					<button>Actions</button>
+				</div>
 
-				<div class="square"></div>
-				<div class="square"></div>
-				<div class="square"></div>
-				<div class="square"></div>
-				<div class="square"></div>
-				<div class="square"></div>
-				<div class="square"></div>
-				<div class="square"></div>
-				<div class="square"></div>
+				<div class="square shadow"></div>
+				<div class="square shadow"></div>
+				<div class="square shadow"></div>
+				<div class="square shadow"></div>
+				<div class="square shadow"></div>
+				<div class="square shadow"></div>
+				<div class="square shadow"></div>
+				<div class="square shadow"></div>
+				<div class="square shadow"></div>
 
-				<div class="score"></div>
-				<div class="score"></div>
-				<div class="score"></div>
+				<div class="p1-score shadow">
+					<p>Player 1</p>
+					<span>0 wins</span>
+				</div>
+
+				<div class="ties shadow">
+					<p>Ties</p>
+					<span>0</span>
+				</div>
+
+				<div class="p2-score shadow">
+					<p>Player 2</p>
+					<span>0 wins</span>
+				</div>
 			</div>
 		</main>
+		<footer>
+			<p>
+				Created by
+				<a href="https://www.linkedin.com/in/shubhamcweb/">
+					Shubham Chandravanshi
+				</a>
+			</p>
+		</footer>
 	</body>
 </html>
