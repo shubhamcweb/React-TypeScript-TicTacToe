@@ -65,7 +65,7 @@ button:hover {
 .grid {
 	display: grid;
 	grid-template-columns: repeat(3, 25vw);
-	grid-template-rows: 8vw repeat(3, 25vw) 10vw;
+	grid-template-rows: 8vw repeat(3, 25vw) 12vw;
 	gap: 16px;
 }
 
@@ -159,6 +159,7 @@ button:hover {
 }
 
 .menu-items button {
+	font-size: 0.8rem;
 	background-color: transparent;
 	color: white;
 	padding: 8px;
