@@ -13,35 +13,45 @@
 	<body>
 		<main>
 			<div class="grid">
-				<div class="turn turquoise">
+				<!-- Turn indicator -->
+				<div class="turn turquoise" data-id="turn">
 					<i class="fa-solid fa-x"></i>
 					<p>Player 1, you're up!</p>
 				</div>
-				<div class="actions">
-					<button>Actions</button>
+
+				<!-- Dropdown menu -->
+				<div data-id="menu" class="menu">
+					<button data-id="menu-btn" class="menu-btn">
+						Actions
+						<i class="fa-solid fa-chevron-down"></i>
+					</button>
+
+					<div data-id="menu-items" class="menu-items border hidden">
+						<button data-id="reset-btn">Reset</button>
+						<button data-id="new-round-btn">New Round</button>
+					</div>
 				</div>
 
-				<div class="square shadow"></div>
-				<div class="square shadow"></div>
-				<div class="square shadow"></div>
-				<div class="square shadow"></div>
-				<div class="square shadow"></div>
-				<div class="square shadow"></div>
-				<div class="square shadow"></div>
-				<div class="square shadow"></div>
-				<div class="square shadow"></div>
+				<!-- Game board -->
+				<div id="1" data-id="squares" class="square shadow"></div>
+				<div id="2" data-id="squares" class="square shadow"></div>
+				<div id="3" data-id="squares" class="square shadow"></div>
+				<div id="4" data-id="squares" class="square shadow"></div>
+				<div id="5" data-id="squares" class="square shadow"></div>
+				<div id="6" data-id="squares" class="square shadow"></div>
+				<div id="7" data-id="squares" class="square shadow"></div>
+				<div id="8" data-id="squares" class="square shadow"></div>
+				<div id="9" data-id="squares" class="square shadow"></div>
 
-				<div class="p1-score shadow">
+				<div class="score shadow" style="background-color: var(--turquoise)">
 					<p>Player 1</p>
 					<span>0 wins</span>
 				</div>
-
-				<div class="ties shadow">
+				<div class="score shadow" style="background-color: var(--light-gray)">
 					<p>Ties</p>
 					<span>0</span>
 				</div>
-
-				<div class="p2-score shadow">
+				<div class="score shadow" style="background-color: var(--yellow)">
 					<p>Player 2</p>
 					<span>0 wins</span>
 				</div>
@@ -50,10 +60,20 @@
 		<footer>
 			<p>
 				Created by
-				<a href="https://www.linkedin.com/in/shubhamcweb/">
+				<a href="https://www.linkedin.com/in/shubhamcweb/" class="turquoise">
 					Shubham Chandravanshi
 				</a>
 			</p>
 		</footer>
+
+		<!-- Modal that opens when the game ends -->
+		<div class="modal hidden" data-id="modal">
+			<div class="modal-content">
+				<p data-id="modal-text">Player 1 wins!</p>
+				<button data-id="modal-btn">Play again</button>
+			</div>
+		</div>
+
+		<script src="js/app.js" type="module"></script>
 	</body>
 </html>
