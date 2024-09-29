@@ -52,6 +52,12 @@ export default class View {
 		icon.classList.toggle("fa-chevron-up");
 	}
 
+	closeMenu() {
+		if (!this.$.menuItems.classList.contains("hidden")) {
+			this.#toggleMenu();
+		}
+	}
+
 	handlePlayerMove(squareEl, player) {
 		const icon = document.createElement("i");
 		icon.classList.add("fa-solid", player.iconClass, player.colorClass);

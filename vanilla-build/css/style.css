@@ -138,7 +138,7 @@ button:hover {
 	color: white;
 	background-color: rgba(211, 211, 211, 0.05);
 	border: 1px solid transparent;
-	border-radius: 10px;
+	border-radius: 8px;
 }
 
 .menu-items {
@@ -148,8 +148,8 @@ button:hover {
 	right: 0;
 
 	background-color: #203139;
-	border-radius: 2px;
-	padding: 10px;
+	border-radius: 8px;
+	padding: 8px;
 }
 
 @media (min-width: 640px) {
@@ -191,7 +191,7 @@ button:hover {
 	align-items: center;
 	gap: 2px;
 
-	border-radius: 10px;
+	border-radius: 8px;
 }
 
 .score p {
@@ -207,7 +207,7 @@ button:hover {
 footer {
 	color: white;
 	font-size: 0.8rem;
-	margin-top: 10vw;
+	margin-top: 16vw;
 }
 
 @media (min-width: 640px) {

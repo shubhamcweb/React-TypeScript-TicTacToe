@@ -156,8 +156,6 @@ function init() {
 	const view = new View();
 	const store = new Store(players);
 
-	console.log(store.game);
-
 	view.bindGameResetEvent((event) => {
 		view.closeModal();
 		view.clearMoves();
@@ -173,6 +171,8 @@ function init() {
 	});
 
 	view.bindPlayerMoveEvent((square) => {
+		view.closeMenu();
+
 		const existingMove = store.game.moves.find(
 			(move) => move.squareID === +square.id
 		);
