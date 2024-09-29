@@ -69,10 +69,10 @@ button:hover {
 	gap: 16px;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 480px) {
 	.grid {
-		grid-template-columns: repeat(3, 160px);
-		grid-template-rows: 50px repeat(3, 160px) 60px;
+		grid-template-columns: repeat(3, 140px);
+		grid-template-rows: 50px repeat(3, 140px) 60px;
 		gap: 20px;
 	}
 }
@@ -84,7 +84,7 @@ button:hover {
 
 	display: flex;
 	align-items: center;
-	gap: 20px;
+	gap: 16px;
 }
 
 @keyframes turn-icon-animation {
@@ -100,7 +100,7 @@ button:hover {
 }
 
 .turn i {
-	font-size: 1.8rem;
+	font-size: 1.6rem;
 	margin-left: 10px;
 	animation: 0.6s ease-in-out turn-icon-animation;
 }
@@ -121,6 +121,16 @@ button:hover {
 	animation: 0.6s ease-in-out turn-text-animation;
 }
 
+@media (min-width: 480px) {
+	.turn i {
+		font-size: 2rem;
+	}
+
+	.turn p {
+		font-size: 1rem;
+	}
+}
+
 /* Menu styles */
 .menu {
 	position: relative;
@@ -134,7 +144,6 @@ button:hover {
 	justify-content: space-around;
 	align-items: center;
 
-	font-size: 0.9rem;
 	color: white;
 	background-color: rgba(211, 211, 211, 0.05);
 	border: 1px solid transparent;
@@ -147,22 +156,35 @@ button:hover {
 	top: 10vw;
 	right: 0;
 
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
 	background-color: #203139;
 	border-radius: 8px;
 	padding: 8px;
 }
 
-@media (min-width: 640px) {
+.menu-items button {
+	text-align: left;
+	background-color: transparent;
+	color: white;
+	margin: 4px;
+}
+
+@media (min-width: 480px) {
+	.menu-btn {
+		font-size: 0.9rem;
+	}
+
 	.menu-items {
 		top: 60px;
 	}
-}
 
-.menu-items button {
-	font-size: 0.8rem;
-	background-color: transparent;
-	color: white;
-	padding: 8px;
+	.menu-items button {
+		margin: 8px;
+		font-size: 0.9rem;
+	}
 }
 
 .menu-items button:hover {
@@ -177,7 +199,7 @@ button:hover {
 
 	background-color: var(--gray);
 	border-radius: 10px;
-	font-size: 3rem;
+	font-size: 2.4rem;
 }
 
 .square:hover {
@@ -185,13 +207,17 @@ button:hover {
 	opacity: 90%;
 }
 
+@media (min-width: 480px) {
+	.square {
+		font-size: 3rem;
+	}
+}
+
 .score {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 2px;
-
 	border-radius: 8px;
 }
 
@@ -204,6 +230,12 @@ button:hover {
 	font-size: 0.8rem;
 }
 
+@media (min-width: 480px) {
+	.score {
+		gap: 2px;
+	}
+}
+
 /* Footer styles */
 footer {
 	color: white;
@@ -211,7 +243,7 @@ footer {
 	margin-top: 16vw;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 480px) {
 	footer {
 		font-size: 1rem;
 		margin-top: 60px;
