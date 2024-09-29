@@ -154,13 +154,17 @@ const players = [
 
 function init() {
 	const view = new View();
-	const store = new Store();
+	const store = new Store(players);
 
 	console.log(store.game);
 
 	view.bindGameResetEvent((event) => {
-		console.log("Reset Event");
-		console.log(event);
+		view.closeModal();
+		view.clearMoves();
+
+		store.reset();
+
+		view.setTurnIndicator(store.game.currentPlayer);
 	});
 
 	view.bindNewRoundEvent((event) => {
@@ -168,9 +172,26 @@ function init() {
 		console.log(event);
 	});
 
-	view.bindPlayerMoveEvent((event) => {
-		view.handlePlayerMove(event.target, 1);
-		view.setTurnIndicator(2);
+	view.bindPlayerMoveEvent((square) => {
+		const existingMove = store.game.moves.find(
+			(move) => move.squareID === +square.id
+		);
+
+		if (existingMove) return;
+
+		// Place icon of the current player on the square
+		view.handlePlayerMove(square, store.game.currentPlayer);
+
+		// Advance to the next state by pushing a move to the moves array
+		store.playerMove(+square.id);
+
+		if (store.game.status.isComplete) {
+			view.openModal(store.game.status.winner);
+			return;
+		}
+
+		// Set the next player's turn indicator
+		view.setTurnIndicator(store.game.currentPlayer); // this is the updated current player
 	});
 }
 
