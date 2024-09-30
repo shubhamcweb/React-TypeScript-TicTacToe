@@ -144,6 +144,7 @@ button:hover {
 	justify-content: space-around;
 	align-items: center;
 
+	font-size: 0.9rem;
 	color: white;
 	background-color: rgba(211, 211, 211, 0.05);
 	border: 1px solid transparent;
@@ -169,21 +170,18 @@ button:hover {
 	text-align: left;
 	background-color: transparent;
 	color: white;
-	margin: 4px;
+	font-size: 0.9rem;
+	padding-top: 4px;
+	padding-bottom: 4px;
 }
 
 @media (min-width: 480px) {
-	.menu-btn {
-		font-size: 0.9rem;
-	}
-
 	.menu-items {
 		top: 60px;
 	}
 
 	.menu-items button {
-		margin: 8px;
-		font-size: 0.9rem;
+		padding: 8px;
 	}
 }
 
@@ -274,7 +272,7 @@ footer {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 20px;
+	gap: 16px;
 
 	background-color: #2a4544;
 	color: white;
@@ -283,7 +281,9 @@ footer {
 
 .modal-content button {
 	padding: 10px;
+	border-radius: 4px;
+
+	font-size: 0.9rem;
 	background-color: var(--turquoise);
 	color: #2a4544;
-	border-radius: 4px;
 }
