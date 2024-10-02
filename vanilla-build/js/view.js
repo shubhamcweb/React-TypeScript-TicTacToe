@@ -12,6 +12,9 @@ export default class View {
 		this.$.modalText = this.#qs('[data-id="modal-text"]');
 		this.$.modalBtn = this.#qs('[data-id="modal-btn"]');
 		this.$.turn = this.#qs('[data-id="turn"]');
+		this.$.p1Wins = this.#qs('[data-id="p1-wins"]');
+		this.$.p2Wins = this.#qs('[data-id="p2-wins"]');
+		this.$.ties = this.#qs('[data-id="ties"]');
 
 		this.$$.squares = this.#qsAll('[data-id="squares"]');
 
@@ -88,6 +91,12 @@ export default class View {
 		label.classList.add(player.colorClass);
 
 		this.$.turn.replaceChildren(icon, label);
+	}
+
+	updateScoreboard(p1Wins, p2Wins, ties) {
+		this.$.p1Wins.textContent = `${p1Wins} wins`;
+		this.$.p2Wins.textContent = `${p2Wins} wins`;
+		this.$.ties.textContent = ties;
 	}
 
 	#qs(selector, parent) {

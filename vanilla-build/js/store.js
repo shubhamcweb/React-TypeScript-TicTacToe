@@ -1,5 +1,9 @@
 const initialValue = {
-	moves: [],
+	currentGameMoves: [],
+	history: {
+		currentRoundGames: [],
+		allGames: [],
+	},
 };
 
 export default class Store {
@@ -10,11 +14,9 @@ export default class Store {
 	}
 
 	playerMove(squareID) {
-		const state = this.#getState();
+		const stateClone = structuredClone(this.#getState());
 
-		const stateClone = structuredClone(state);
-
-		stateClone.moves.push({
+		stateClone.currentGameMoves.push({
 			squareID,
 			player: this.game.currentPlayer,
 		});
@@ -25,7 +27,7 @@ export default class Store {
 	get game() {
 		const state = this.#getState();
 
-		const currentPlayer = this.players[state.moves.length % 2];
+		const currentPlayer = this.players[state.currentGameMoves.length % 2];
 
 		const winningPatterns = [
 			[1, 2, 3],
@@ -41,7 +43,7 @@ export default class Store {
 		let winner = null;
 
 		for (const player of this.players) {
-			const selectedSquareIDs = state.moves
+			const selectedSquareIDs = state.currentGameMoves
 				.filter((move) => move.player.id === player.id)
 				.map((move) => move.squareID);
 
@@ -53,17 +55,60 @@ export default class Store {
 		}
 
 		return {
-			moves: state.moves,
+			moves: state.currentGameMoves,
 			currentPlayer,
 			status: {
-				isComplete: winner !== null || state.moves.length === 9,
+				isComplete: winner !== null || state.currentGameMoves.length === 9,
 				winner,
 			},
 		};
 	}
 
+	get stats() {
+		const state = this.#getState();
+
+		return {
+			playersWithStats: this.players.map((player) => {
+				const wins = state.history.currentRoundGames.filter(
+					(game) => game.status.winner?.id === player.id
+				).length;
+
+				return {
+					...player,
+					wins,
+				};
+			}),
+			ties: state.history.currentRoundGames.filter(
+				(game) => game.status.winner === null
+			).length,
+		};
+	}
+
 	reset() {
-		this.#saveState(initialValue);
+		const stateClone = structuredClone(this.#getState());
+
+		const { moves, status } = this.game;
+
+		if (status.isComplete) {
+			stateClone.history.currentRoundGames.push({
+				moves,
+				status,
+			});
+		}
+
+		stateClone.currentGameMoves = [];
+
+		this.#saveState(stateClone);
+	}
+
+	newRound() {
+		const stateClone = structuredClone(this.#getState());
+
+		stateClone.currentGameMoves = [];
+		stateClone.history.allGames.push(...stateClone.history.currentRoundGames);
+		stateClone.history.currentRoundGames = [];
+
+		this.#saveState(stateClone);
 	}
 
 	#getState() {

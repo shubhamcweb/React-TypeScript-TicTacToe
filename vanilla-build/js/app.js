@@ -163,11 +163,23 @@ function init() {
 		store.reset();
 
 		view.setTurnIndicator(store.game.currentPlayer);
+		view.updateScoreboard(
+			store.stats.playersWithStats[0].wins,
+			store.stats.playersWithStats[1].wins,
+			store.stats.ties
+		);
 	});
 
 	view.bindNewRoundEvent((event) => {
-		console.log("New Round Event");
-		console.log(event);
+		store.newRound();
+
+		view.clearMoves();
+		view.setTurnIndicator(store.game.currentPlayer);
+		view.updateScoreboard(
+			store.stats.playersWithStats[0].wins,
+			store.stats.playersWithStats[1].wins,
+			store.stats.ties
+		);
 	});
 
 	view.bindPlayerMoveEvent((square) => {
