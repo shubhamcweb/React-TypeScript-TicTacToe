@@ -8,32 +8,40 @@ const players = [
 
 function init() {
 	const view = new View();
-	const store = new Store(players);
+	const store = new Store("t3-storage-key", players);
 
-	view.bindGameResetEvent((event) => {
+	function initView() {
 		view.closeModal();
+		view.closeMenu();
 		view.clearMoves();
-
-		store.reset();
-
 		view.setTurnIndicator(store.game.currentPlayer);
 		view.updateScoreboard(
 			store.stats.playersWithStats[0].wins,
 			store.stats.playersWithStats[1].wins,
 			store.stats.ties
 		);
+		view.initializeMoves(store.game.moves);
+	}
+
+	if (store.game.status.isComplete) store.reset();
+	initView();
+
+	window.addEventListener("storage", () => {
+		initView();
+		if (store.game.status.isComplete) {
+			view.openModal(store.game.status.winner);
+		}
+		console.log("State changed from the other tab.");
 	});
 
-	view.bindNewRoundEvent((event) => {
-		store.newRound();
+	view.bindGameResetEvent(() => {
+		store.reset();
+		initView();
+	});
 
-		view.clearMoves();
-		view.setTurnIndicator(store.game.currentPlayer);
-		view.updateScoreboard(
-			store.stats.playersWithStats[0].wins,
-			store.stats.playersWithStats[1].wins,
-			store.stats.ties
-		);
+	view.bindNewRoundEvent(() => {
+		store.newRound();
+		initView();
 	});
 
 	view.bindPlayerMoveEvent((square) => {
