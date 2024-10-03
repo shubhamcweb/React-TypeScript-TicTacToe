@@ -35,8 +35,7 @@ export default class View {
 			status: { isComplete, winner },
 		} = game;
 
-		this.#closeModal();
-		this.#closeMenu();
+		this.#closeAll();
 		this.#clearMoves();
 		this.#updateScoreboard(
 			playersWithStats[0].wins,
@@ -82,12 +81,6 @@ export default class View {
 		icon.classList.toggle("fa-chevron-up");
 	}
 
-	#closeMenu() {
-		if (!this.$.menuItems.classList.contains("hidden")) {
-			this.#toggleMenu();
-		}
-	}
-
 	#handlePlayerMove(squareEl, player) {
 		const icon = document.createElement("i");
 		icon.classList.add("fa-solid", player.iconClass, player.colorClass);
@@ -111,7 +104,10 @@ export default class View {
 			winner !== null ? `${winner.name} wins!` : "Tie game!";
 	}
 
-	#closeModal() {
+	#closeAll() {
+		if (!this.$.menuItems.classList.contains("hidden")) {
+			this.#toggleMenu();
+		}
 		this.$.modal.classList.add("hidden");
 	}
 
