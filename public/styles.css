@@ -1,0 +1,289 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap");
+
+:root {
+	--dark-gray: #1a2a32;
+	--gray: #2e4756;
+	--turquoise: #3cc4bf;
+	--yellow: #f2b147;
+	--light-gray: #d3d3d3;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	list-style: none;
+	font-family: "Montserrat", sans-serif;
+	border: none;
+}
+
+html,
+body {
+	height: 100%;
+	font-size: 16px;
+	background-color: var(--dark-gray);
+}
+
+body {
+	padding: 80px 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Shared Utility Classes */
+
+button:hover {
+	cursor: pointer;
+	opacity: 90%;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.yellow {
+	color: var(--yellow);
+}
+
+.turquoise {
+	color: var(--turquoise);
+}
+
+.shadow {
+	box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+		rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.border {
+	border: 1px solid rgba(211, 211, 211, 0.4) !important;
+}
+
+/* Grid styles */
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, 25vw);
+	grid-template-rows: 8vw repeat(3, 25vw) 12vw;
+	gap: 16px;
+}
+
+@media (min-width: 480px) {
+	.grid {
+		grid-template-columns: repeat(3, 140px);
+		grid-template-rows: 50px repeat(3, 140px) 60px;
+		gap: 20px;
+	}
+}
+
+/* Turn styles */
+.turn {
+	grid-column: 1 / 3;
+	align-self: center;
+
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+@keyframes turn-icon-animation {
+	0% {
+		transform: scale(1);
+	}
+	25% {
+		transform: scale(1.4);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.turn i {
+	font-size: 1.6rem;
+	margin-left: 10px;
+	animation: 0.6s ease-in-out turn-icon-animation;
+}
+
+@keyframes turn-text-animation {
+	0% {
+		opacity: 0;
+		transform: translateX(-20px);
+	}
+	100% {
+		opacity: 100%;
+		transform: translateX(0);
+	}
+}
+
+.turn p {
+	font-size: 0.9rem;
+	animation: 0.6s ease-in-out turn-text-animation;
+}
+
+@media (min-width: 480px) {
+	.turn i {
+		font-size: 2rem;
+	}
+
+	.turn p {
+		font-size: 1rem;
+	}
+}
+
+/* Menu styles */
+.menu {
+	position: relative;
+}
+
+.menu-btn {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+
+	font-size: 0.9rem;
+	color: white;
+	background-color: rgba(211, 211, 211, 0.05);
+	border: 1px solid transparent;
+	border-radius: 8px;
+}
+
+.menu-items {
+	position: absolute;
+	z-index: 1;
+	top: 10vw;
+	right: 0;
+
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	background-color: #203139;
+	border-radius: 8px;
+	padding: 8px;
+}
+
+.menu-items button {
+	text-align: left;
+	background-color: transparent;
+	color: white;
+	font-size: 0.9rem;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+@media (min-width: 480px) {
+	.menu-items {
+		top: 60px;
+	}
+
+	.menu-items button {
+		padding: 8px;
+	}
+}
+
+.menu-items button:hover {
+	text-decoration: underline;
+}
+
+/* Game board styles */
+.square {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: var(--gray);
+	border-radius: 10px;
+	font-size: 2.4rem;
+}
+
+.square:hover {
+	cursor: pointer;
+	opacity: 90%;
+}
+
+@media (min-width: 480px) {
+	.square {
+		font-size: 3rem;
+	}
+}
+
+.score {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 8px;
+}
+
+.score p {
+	font-size: 0.9rem;
+	font-weight: 600;
+}
+
+.score span {
+	font-size: 0.8rem;
+}
+
+@media (min-width: 480px) {
+	.score {
+		gap: 2px;
+	}
+}
+
+/* Footer styles */
+footer {
+	color: white;
+	font-size: 0.8rem;
+	margin-top: 16vw;
+}
+
+@media (min-width: 480px) {
+	footer {
+		font-size: 1rem;
+		margin-top: 60px;
+	}
+}
+
+/* Modal styles */
+.modal {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+	/* transform: translateY(-80px); */
+	height: 150px;
+	width: 100%;
+	max-width: 300px;
+	margin: 10px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 16px;
+
+	background-color: #2a4544;
+	color: white;
+	border-radius: 16px;
+}
+
+.modal-content button {
+	padding: 10px;
+	border-radius: 4px;
+
+	font-size: 0.9rem;
+	background-color: var(--turquoise);
+	color: #2a4544;
+}
