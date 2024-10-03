@@ -6,8 +6,9 @@ const initialValue = {
 	},
 };
 
-export default class Store {
+export default class Store extends EventTarget {
 	constructor(storageKey, players) {
+		super();
 		this.storageKey = storageKey;
 		this.players = players;
 	}
@@ -132,5 +133,7 @@ export default class Store {
 		}
 
 		window.localStorage.setItem(this.storageKey, JSON.stringify(newState));
+
+		this.dispatchEvent(new Event("statechange"));
 	}
 }
