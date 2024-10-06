@@ -1,6 +1,9 @@
+import type { Move, Player } from "./types";
+import type { DerivedGame, DerivedStats } from "./store";
+
 export default class View {
-	$ = {};
-	$$ = {};
+	$: Record<string, Element> = {};
+	$$: Record<string, NodeListOf<Element>> = {};
 
 	constructor() {
 		// Single elements
@@ -27,7 +30,7 @@ export default class View {
 		});
 	}
 
-	render(game, stats) {
+	render(game: DerivedGame, stats: DerivedStats) {
 		const { playersWithStats, ties } = stats;
 		const {
 			moves,
@@ -55,16 +58,16 @@ export default class View {
 	/**
 	 * Register all event listeners
 	 */
-	bindGameResetEvent(handler) {
+	bindGameResetEvent(handler: EventListener) {
 		this.$.resetBtn.addEventListener("click", handler);
 		this.$.modalBtn.addEventListener("click", handler);
 	}
 
-	bindNewRoundEvent(handler) {
+	bindNewRoundEvent(handler: EventListener) {
 		this.$.newRoundBtn.addEventListener("click", handler);
 	}
 
-	bindPlayerMoveEvent(handler) {
+	bindPlayerMoveEvent(handler: (el: Element) => void) {
 		this.#delegate(this.$.grid, '[data-id="square"]', "click", handler);
 	}
 
@@ -75,20 +78,20 @@ export default class View {
 		this.$.menuItems.classList.toggle("hidden");
 		this.$.menuBtn.classList.toggle("border");
 
-		const icon = this.$.menuBtn.querySelector("i");
+		const icon = this.#qs("i", this.$.menuBtn);
 
 		icon.classList.toggle("fa-chevron-down");
 		icon.classList.toggle("fa-chevron-up");
 	}
 
-	#handlePlayerMove(squareEl, player) {
+	#handlePlayerMove(squareEl: Element, player: Player) {
 		const icon = document.createElement("i");
 		icon.classList.add("fa-solid", player.iconClass, player.colorClass);
 
 		squareEl.replaceChildren(icon);
 	}
 
-	#initializeMoves(moves) {
+	#initializeMoves(moves: Move[]) {
 		this.$$.squares.forEach((square) => {
 			const existingMove = moves.find((move) => move.squareID === +square.id);
 
@@ -98,7 +101,7 @@ export default class View {
 		});
 	}
 
-	#openModal(winner) {
+	#openModal(winner: Player | null) {
 		this.$.modal.classList.remove("hidden");
 		this.$.modalText.textContent =
 			winner !== null ? `${winner.name} wins!` : "Tie game!";
@@ -115,7 +118,7 @@ export default class View {
 		this.$$.squares.forEach((square) => square.replaceChildren());
 	}
 
-	#setTurnIndicator(player) {
+	#setTurnIndicator(player: Player) {
 		const icon = document.createElement("i");
 		const label = document.createElement("p");
 
@@ -126,13 +129,13 @@ export default class View {
 		this.$.turn.replaceChildren(icon, label);
 	}
 
-	#updateScoreboard(p1Wins, p2Wins, ties) {
+	#updateScoreboard(p1Wins: number, p2Wins: number, ties: number) {
 		this.$.p1Wins.textContent = `${p1Wins} wins`;
 		this.$.p2Wins.textContent = `${p2Wins} wins`;
-		this.$.ties.textContent = ties;
+		this.$.ties.textContent = `${ties}`;
 	}
 
-	#qs(selector, parent) {
+	#qs(selector: string, parent?: Element) {
 		const el = parent
 			? parent.querySelector(selector)
 			: document.querySelector(selector);
@@ -142,7 +145,7 @@ export default class View {
 		return el;
 	}
 
-	#qsAll(selector) {
+	#qsAll(selector: string) {
 		const elList = document.querySelectorAll(selector);
 
 		if (!elList) throw new Error("Could not find elements");
@@ -150,8 +153,16 @@ export default class View {
 		return elList;
 	}
 
-	#delegate(el, selector, eventKey, handler) {
+	#delegate(
+		el: Element,
+		selector: string,
+		eventKey: string,
+		handler: (el: Element) => void
+	) {
 		el.addEventListener(eventKey, (event) => {
+			if (!(event.target instanceof Element)) {
+				throw new Error("Event target not found");
+			}
 			if (event.target.matches(selector)) {
 				handler(event.target);
 			}
