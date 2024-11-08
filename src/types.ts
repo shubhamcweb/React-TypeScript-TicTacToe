@@ -1,3 +1,19 @@
+export type Games = {
+	moves: number[];
+	scores: Scores;
+};
+
+export type Scores = {
+	p1Wins: number;
+	p2Wins: number;
+	ties: number;
+};
+
+export type Game = {
+	moves: Move[];
+	status: GameStatus;
+};
+
 export type Player = {
 	id: number;
 	name: string;
@@ -13,11 +29,6 @@ export type Move = {
 export type GameStatus = {
 	isComplete: boolean;
 	winner: Player | null;
-};
-
-export type Game = {
-	moves: Move[];
-	status: GameStatus;
 };
 
 export type GameState = {
