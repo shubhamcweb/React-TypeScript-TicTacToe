@@ -56,22 +56,46 @@ export default function App() {
 	}
 
 	function handleResetEvent() {
-		const updatedGame = { ...game };
-		if (winner) {
-			winner === 1 ? updatedGame.scores.p1Wins++ : updatedGame.scores.p2Wins++;
-		} else if (updatedGame.moves.length === 9) {
-			updatedGame.scores.ties++;
+		if (winner === 1) {
+			setGame({
+				...game,
+				moves: [],
+				scores: {
+					...game.scores,
+					p1Wins: game.scores.p1Wins + 1,
+				},
+			});
+		} else if (winner === 2) {
+			setGame({
+				...game,
+				moves: [],
+				scores: {
+					...game.scores,
+					p2Wins: game.scores.p2Wins + 1,
+				},
+			});
+		} else if (game.moves.length === 9) {
+			setGame({
+				...game,
+				moves: [],
+				scores: {
+					...game.scores,
+					ties: game.scores.ties + 1,
+				},
+			});
+		} else {
+			setGame({
+				...game,
+				moves: [],
+			});
 		}
-		updatedGame.moves = [];
-
-		setGame(updatedGame);
 	}
 
 	function handleNewRoundEvent() {
-		const updatedGame = { ...game };
-		updatedGame.moves = [];
-		updatedGame.scores = { p1Wins: 0, p2Wins: 0, ties: 0 };
-		setGame(updatedGame);
+		setGame({
+			moves: [],
+			scores: { p1Wins: 0, p2Wins: 0, ties: 0 },
+		});
 	}
 
 	return (
