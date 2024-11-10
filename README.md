@@ -24,9 +24,9 @@ During this project, I learned and applied several key concepts and technologies
 - **Non-Mutating Code**: Ensured state immutability for reliable state updates and predictable rendering.
 - **Project Setup**: Used `bun` to initialize the project, which streamlined the setup process and optimized performance.
 
-## Contact
+## Author
 
-If there are any questions, feedback, or if you just want to connect, feel free to reach out to me at:
+Hi, I'm Shubham Chandravanshi. If you have any questions or feedback related to this project, or if you just want to connect, feel free to reach out to me at:
 
 - **Email**: [shubhamcweb@gmail.com](mailto:shubhamcweb@gmail.com)
 - **LinkedIn**: [linkedin.com/in/shubhamcweb](https://linkedin.com/in/shubhamcweb)
