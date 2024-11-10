@@ -1,7 +1,36 @@
 # React-TypeScript-TicTacToe
 
-This is the React implementation of the typescript-build code.
+This branch is the React implementation of the Tic-Tac-Toe project.
+
+<img src="./public/image.png" alt="Game Screenshot" style="max-width: 480px; width: 100%;" />
+
+The game is deployed via GitHub Pages and can be accessed here at: [Live Site](https://shubhamcweb.github.io/React-TypeScript-TicTacToe/)
 
 You can also check out the TypeScript & vanilla JavaScript implementation on the typescript-build and vanilla-build branches respectively.
 
-This project was created using `bun init` in bun v1.1.29. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime, package manager and module bundler.
+## Features
+
+- Interactive Tic-Tac-Toe game built with React and TypeScript.
+- Persistent game state using `localStorage`.
+- Responsive design for various screen sizes.
+- Clear visual indicators for player turns and game status.
+
+## Learnings
+
+During this project, I learned and applied several key concepts and technologies:
+
+- **TypeScript**: Leveraged TypeScript to add static typing to the project, ensuring better code quality and maintainability.
+- **React**: Developed a deeper understanding of React, including component-based architecture, state management, and hooks.
+  - **useState**: Managed state within functional components.
+  - **useEffect**: Handled side effects such as updating `localStorage` and syncing game state across tabs.
+- **Non-Mutating Code**: Ensured state immutability for reliable state updates and predictable rendering.
+- **Project Setup**: Used `bun` to initialize the project, which streamlined the setup process and optimized performance.
+
+## Contact
+
+If there are any questions, feedback, or if you just want to connect, feel free to reach out to me at:
+
+- **Email**: [shubhamcweb@gmail.com](mailto:shubhamcweb@gmail.com)
+- **LinkedIn**: [linkedin.com/in/shubhamcweb](https://linkedin.com/in/shubhamcweb)
+
+I'm always open to discussing new ideas and opportunities!
