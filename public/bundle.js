@@ -23615,7 +23615,7 @@ function Footer() {
 var import_react = __toESM(require_react(), 1);
 var import_classnames = __toESM(require_classnames(), 1);
 var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
-function Menu({ onResetClick, onNewRoundClick }) {
+function Menu({ onResetActionClick }) {
   const [menuOpen, setMenuOpen] = import_react.useState(false);
   return /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("div", {
     className: "menu",
@@ -23634,11 +23634,11 @@ function Menu({ onResetClick, onNewRoundClick }) {
         className: "menu-items border",
         children: [
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("button", {
-            onClick: onResetClick,
+            onClick: () => onResetActionClick("reset"),
             children: "Reset"
           }, undefined, false, undefined, this),
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV("button", {
-            onClick: onNewRoundClick,
+            onClick: () => onResetActionClick("newRound"),
             children: "New Round"
           }, undefined, false, undefined, this)
         ]
@@ -23760,11 +23760,26 @@ function Turns({ player }) {
 
 // src/App.tsx
 var jsx_dev_runtime7 = __toESM(require_jsx_dev_runtime(), 1);
+var initialValue = { moves: [], scores: { p1Wins: 0, p2Wins: 0, ties: 0 } };
+var localStorageKey = "react-t3-storage-key";
 function App() {
-  const [game, setGame] = import_react2.useState({
-    moves: [],
-    scores: { p1Wins: 0, p2Wins: 0, ties: 0 }
+  const [game, setGame] = import_react2.useState(() => {
+    const savedGame = window.localStorage.getItem(localStorageKey);
+    return savedGame ? JSON.parse(savedGame) : initialValue;
   });
+  import_react2.useEffect(() => {
+    function handleStorageChange(event) {
+      if (event.key === localStorageKey) {
+        const updatedGame = event.newValue ? JSON.parse(event.newValue) : game;
+        setGame(updatedGame);
+      }
+    }
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+  import_react2.useEffect(() => {
+    window.localStorage.setItem(localStorageKey, JSON.stringify(game));
+  }, [game]);
   const currentPlayer = game.moves.length % 2 + 1;
   let winner = null;
   function isComplete() {
@@ -23796,50 +23811,25 @@ function App() {
     if (game.moves.includes(squareId)) {
       return;
     }
-    const updatedGame = { ...game };
+    const updatedGame = structuredClone(game);
     updatedGame.moves.push(squareId);
     setGame(updatedGame);
   }
-  function handleResetEvent() {
-    if (winner === 1) {
-      setGame({
-        ...game,
-        moves: [],
-        scores: {
-          ...game.scores,
-          p1Wins: game.scores.p1Wins + 1
-        }
-      });
-    } else if (winner === 2) {
-      setGame({
-        ...game,
-        moves: [],
-        scores: {
-          ...game.scores,
-          p2Wins: game.scores.p2Wins + 1
-        }
-      });
-    } else if (game.moves.length === 9) {
-      setGame({
-        ...game,
-        moves: [],
-        scores: {
-          ...game.scores,
-          ties: game.scores.ties + 1
-        }
-      });
-    } else {
-      setGame({
-        ...game,
-        moves: []
-      });
+  function handleResetAction(actionType) {
+    if (actionType === "newRound") {
+      setGame(initialValue);
+      return;
     }
-  }
-  function handleNewRoundEvent() {
-    setGame({
-      moves: [],
-      scores: { p1Wins: 0, p2Wins: 0, ties: 0 }
-    });
+    const updatedGame = structuredClone(game);
+    updatedGame.moves = [];
+    if (winner === 1) {
+      updatedGame.scores.p1Wins++;
+    } else if (winner === 2) {
+      updatedGame.scores.p2Wins++;
+    } else if (game.moves.length === 9) {
+      updatedGame.scores.ties++;
+    }
+    setGame(updatedGame);
   }
   return /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(jsx_dev_runtime7.Fragment, {
     children: [
@@ -23851,8 +23841,7 @@ function App() {
               player: currentPlayer
             }, undefined, false, undefined, this),
             /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Menu, {
-              onResetClick: handleResetEvent,
-              onNewRoundClick: handleNewRoundEvent
+              onResetActionClick: handleResetAction
             }, undefined, false, undefined, this),
             /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Squares, {
               onSquareClick: handlePlayerMove,
@@ -23866,7 +23855,7 @@ function App() {
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Footer, {}, undefined, false, undefined, this),
       isComplete() && /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Modal, {
-        onModalClick: handleResetEvent,
+        onModalClick: handleResetAction,
         message: winner ? `Player ${winner} wins!` : `Tie game!`
       }, undefined, false, undefined, this)
     ]

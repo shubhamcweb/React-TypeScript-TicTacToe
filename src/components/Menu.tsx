@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 type Props = any;
 
-export default function Menu({ onResetClick, onNewRoundClick }: Props) {
+export default function Menu({ onResetActionClick }: Props) {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
@@ -20,8 +20,10 @@ export default function Menu({ onResetClick, onNewRoundClick }: Props) {
 
 			{menuOpen && (
 				<div className="menu-items border">
-					<button onClick={onResetClick}>Reset</button>
-					<button onClick={onNewRoundClick}>New Round</button>
+					<button onClick={() => onResetActionClick("reset")}>Reset</button>
+					<button onClick={() => onResetActionClick("newRound")}>
+						New Round
+					</button>
 				</div>
 			)}
 		</div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "./components/Footer.tsx";
 import Menu from "./components/Menu.tsx";
 import Modal from "./components/Modal.tsx";
@@ -8,11 +8,31 @@ import Turns from "./components/Turns.tsx";
 
 import type { Games } from "./types.ts";
 
+const initialValue = { moves: [], scores: { p1Wins: 0, p2Wins: 0, ties: 0 } };
+const localStorageKey = "react-t3-storage-key";
+
 export default function App() {
-	const [game, setGame] = useState<Games>({
-		moves: [],
-		scores: { p1Wins: 0, p2Wins: 0, ties: 0 },
+	const [game, setGame] = useState<Games>(() => {
+		const savedGame = window.localStorage.getItem(localStorageKey);
+		return savedGame ? JSON.parse(savedGame) : initialValue;
 	});
+
+	useEffect(() => {
+		window.localStorage.setItem(localStorageKey, JSON.stringify(game));
+	}, [game]);
+
+	useEffect(() => {
+		function handleStorageChange(event: StorageEvent) {
+			if (event.key === localStorageKey) {
+				const updatedGame = event.newValue ? JSON.parse(event.newValue) : game;
+				setGame(updatedGame);
+			}
+		}
+		window.addEventListener("storage", handleStorageChange);
+
+		return () => window.removeEventListener("storage", handleStorageChange);
+	}, []);
+
 	const currentPlayer = (game.moves.length % 2) + 1;
 	let winner: number | null = null;
 
@@ -50,52 +70,30 @@ export default function App() {
 		if (game.moves.includes(squareId)) {
 			return;
 		}
-		const updatedGame = { ...game };
+		const updatedGame = structuredClone(game);
 		updatedGame.moves.push(squareId);
 		setGame(updatedGame);
 	}
 
-	function handleResetEvent() {
-		if (winner === 1) {
-			setGame({
-				...game,
-				moves: [],
-				scores: {
-					...game.scores,
-					p1Wins: game.scores.p1Wins + 1,
-				},
-			});
-		} else if (winner === 2) {
-			setGame({
-				...game,
-				moves: [],
-				scores: {
-					...game.scores,
-					p2Wins: game.scores.p2Wins + 1,
-				},
-			});
-		} else if (game.moves.length === 9) {
-			setGame({
-				...game,
-				moves: [],
-				scores: {
-					...game.scores,
-					ties: game.scores.ties + 1,
-				},
-			});
-		} else {
-			setGame({
-				...game,
-				moves: [],
-			});
+	function handleResetAction(actionType?: "reset" | "newRound"): void {
+		if (actionType === "newRound") {
+			setGame(initialValue);
+			return;
 		}
-	}
 
-	function handleNewRoundEvent() {
-		setGame({
-			moves: [],
-			scores: { p1Wins: 0, p2Wins: 0, ties: 0 },
-		});
+		const updatedGame = structuredClone(game);
+
+		updatedGame.moves = [];
+
+		if (winner === 1) {
+			updatedGame.scores.p1Wins++;
+		} else if (winner === 2) {
+			updatedGame.scores.p2Wins++;
+		} else if (game.moves.length === 9) {
+			updatedGame.scores.ties++;
+		}
+
+		setGame(updatedGame);
 	}
 
 	return (
@@ -103,10 +101,7 @@ export default function App() {
 			<main>
 				<div className="grid">
 					<Turns player={currentPlayer} />
-					<Menu
-						onResetClick={handleResetEvent}
-						onNewRoundClick={handleNewRoundEvent}
-					/>
+					<Menu onResetActionClick={handleResetAction} />
 					<Squares onSquareClick={handlePlayerMove} moves={game.moves} />
 					<Scoreboard scores={game.scores} />
 				</div>
@@ -115,7 +110,7 @@ export default function App() {
 
 			{isComplete() && (
 				<Modal
-					onModalClick={handleResetEvent}
+					onModalClick={handleResetAction}
 					message={winner ? `Player ${winner} wins!` : `Tie game!`}
 				/>
 			)}
