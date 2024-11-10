@@ -1,6 +1,6 @@
-import type { Scores } from "../types";
+import type { Scores } from "../App.tsx";
 
-export default function Scoreboard({ scores }: any) {
+export default function Scoreboard({ scores }: { scores: Scores }) {
 	return (
 		<>
 			<div

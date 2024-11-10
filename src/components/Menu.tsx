@@ -1,9 +1,11 @@
 import { useState } from "react";
 import classNames from "classnames";
 
-type Props = any;
+type MenuProps = {
+	onResetActionClick: (actionType?: "reset" | "newRound" | undefined) => void;
+};
 
-export default function Menu({ onResetActionClick }: Props) {
+export default function Menu({ onResetActionClick }: MenuProps) {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (

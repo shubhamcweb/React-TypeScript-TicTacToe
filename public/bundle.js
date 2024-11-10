@@ -23590,9 +23590,6 @@ var require_classnames = __commonJS((exports, module) => {
 var import_react3 = __toESM(require_react(), 1);
 var import_client = __toESM(require_client(), 1);
 
-// src/App.tsx
-var import_react2 = __toESM(require_react(), 1);
-
 // src/components/Footer.tsx
 var jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
 function Footer() {
@@ -23659,7 +23656,7 @@ function Modal({ message, onModalClick }) {
           children: message
         }, undefined, false, undefined, this),
         /* @__PURE__ */ jsx_dev_runtime3.jsxDEV("button", {
-          onClick: onModalClick,
+          onClick: () => onModalClick(),
           children: "Play again"
         }, undefined, false, undefined, this)
       ]
@@ -23759,14 +23756,21 @@ function Turns({ player }) {
 }
 
 // src/App.tsx
+var import_react2 = __toESM(require_react(), 1);
 var jsx_dev_runtime7 = __toESM(require_jsx_dev_runtime(), 1);
-var initialValue = { moves: [], scores: { p1Wins: 0, p2Wins: 0, ties: 0 } };
+var initialValue = {
+  moves: [],
+  scores: { p1Wins: 0, p2Wins: 0, ties: 0 }
+};
 var localStorageKey = "react-t3-storage-key";
 function App() {
   const [game, setGame] = import_react2.useState(() => {
     const savedGame = window.localStorage.getItem(localStorageKey);
     return savedGame ? JSON.parse(savedGame) : initialValue;
   });
+  import_react2.useEffect(() => {
+    window.localStorage.setItem(localStorageKey, JSON.stringify(game));
+  }, [game]);
   import_react2.useEffect(() => {
     function handleStorageChange(event) {
       if (event.key === localStorageKey) {
@@ -23777,9 +23781,6 @@ function App() {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
-  import_react2.useEffect(() => {
-    window.localStorage.setItem(localStorageKey, JSON.stringify(game));
-  }, [game]);
   const currentPlayer = game.moves.length % 2 + 1;
   let winner = null;
   function isComplete() {

@@ -1,8 +1,11 @@
 import classNames from "classnames";
 
-type Props = any;
+type SquaresProps = {
+	onSquareClick: (squareId: number) => void;
+	moves: number[];
+};
 
-export default function Squares({ onSquareClick, moves }: Props) {
+export default function Squares({ onSquareClick, moves }: SquaresProps) {
 	return (
 		<>
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9].map((squareId) => {

@@ -1,14 +1,14 @@
-type Props = {
+type ModalProps = {
 	message: string;
-	onModalClick: any;
+	onModalClick: (actionType?: "reset" | "newRound" | undefined) => void;
 };
 
-export default function Modal({ message, onModalClick }: Props) {
+export default function Modal({ message, onModalClick }: ModalProps) {
 	return (
 		<div className="modal">
 			<div className="modal-content">
 				<p>{message}</p>
-				<button onClick={onModalClick}>Play again</button>
+				<button onClick={() => onModalClick()}>Play again</button>
 			</div>
 		</div>
 	);

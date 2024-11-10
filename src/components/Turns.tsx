@@ -1,8 +1,6 @@
 import classNames from "classnames";
 
-type Player = { player: number };
-
-export default function Turns({ player }: Player) {
+export default function Turns({ player }: { player: number }) {
 	return (
 		<div className="turn">
 			<i

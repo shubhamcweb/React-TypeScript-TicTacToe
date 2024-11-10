@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Footer from "./components/Footer.tsx";
 import Menu from "./components/Menu.tsx";
 import Modal from "./components/Modal.tsx";
@@ -6,14 +5,29 @@ import Scoreboard from "./components/Scoreboard.tsx";
 import Squares from "./components/Squares.tsx";
 import Turns from "./components/Turns.tsx";
 
-import type { Games } from "./types.ts";
+import { useEffect, useState } from "react";
 
-const initialValue = { moves: [], scores: { p1Wins: 0, p2Wins: 0, ties: 0 } };
-const localStorageKey = "react-t3-storage-key";
+type Game = {
+	moves: number[];
+	scores: Scores;
+};
+
+export type Scores = {
+	p1Wins: number;
+	p2Wins: number;
+	ties: number;
+};
+
+const initialValue: Game = {
+	moves: [],
+	scores: { p1Wins: 0, p2Wins: 0, ties: 0 },
+};
+const localStorageKey: string = "react-t3-storage-key";
 
 export default function App() {
-	const [game, setGame] = useState<Games>(() => {
-		const savedGame = window.localStorage.getItem(localStorageKey);
+	const [game, setGame] = useState<Game>(() => {
+		const savedGame: string | null =
+			window.localStorage.getItem(localStorageKey);
 		return savedGame ? JSON.parse(savedGame) : initialValue;
 	});
 
@@ -24,7 +38,9 @@ export default function App() {
 	useEffect(() => {
 		function handleStorageChange(event: StorageEvent) {
 			if (event.key === localStorageKey) {
-				const updatedGame = event.newValue ? JSON.parse(event.newValue) : game;
+				const updatedGame: Game = event.newValue
+					? JSON.parse(event.newValue)
+					: game;
 				setGame(updatedGame);
 			}
 		}
@@ -33,7 +49,7 @@ export default function App() {
 		return () => window.removeEventListener("storage", handleStorageChange);
 	}, []);
 
-	const currentPlayer = (game.moves.length % 2) + 1;
+	const currentPlayer: number = (game.moves.length % 2) + 1;
 	let winner: number | null = null;
 
 	function isComplete(): boolean {
@@ -41,7 +57,7 @@ export default function App() {
 			return true;
 		}
 
-		const winningPatterns = [
+		const winningPatterns: number[][] = [
 			[1, 2, 3],
 			[1, 5, 9],
 			[1, 4, 7],
@@ -52,8 +68,8 @@ export default function App() {
 			[7, 8, 9],
 		];
 
-		const p1Moves = game.moves.filter((_, index) => index % 2 === 0);
-		const p2Moves = game.moves.filter((_, index) => index % 2 === 1);
+		const p1Moves: number[] = game.moves.filter((_, index) => index % 2 === 0);
+		const p2Moves: number[] = game.moves.filter((_, index) => index % 2 === 1);
 
 		[p1Moves, p2Moves].forEach((playerMoves) => {
 			for (const pattern of winningPatterns) {
@@ -70,18 +86,20 @@ export default function App() {
 		if (game.moves.includes(squareId)) {
 			return;
 		}
-		const updatedGame = structuredClone(game);
+		const updatedGame: Game = structuredClone(game);
 		updatedGame.moves.push(squareId);
 		setGame(updatedGame);
 	}
 
-	function handleResetAction(actionType?: "reset" | "newRound"): void {
+	function handleResetAction(
+		actionType?: "reset" | "newRound" | undefined
+	): void {
 		if (actionType === "newRound") {
 			setGame(initialValue);
 			return;
 		}
 
-		const updatedGame = structuredClone(game);
+		const updatedGame: Game = structuredClone(game);
 
 		updatedGame.moves = [];
 
