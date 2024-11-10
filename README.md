@@ -1,8 +1,6 @@
 # React-TypeScript-TicTacToe
 
-This branch is the React implementation of the Tic-Tac-Toe project.
-
-The game is deployed via GitHub Pages and can be accessed here at: [Live Site](https://shubhamcweb.github.io/React-TypeScript-TicTacToe/)
+This branch is the React implementation of the Tic-Tac-Toe project. The game is deployed via GitHub Pages and can be accessed here at: [Live Site](https://shubhamcweb.github.io/React-TypeScript-TicTacToe/)
 
 <img src="./public/image.png" alt="Game Screenshot" style="width: 80%" />
 
