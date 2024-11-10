@@ -2,7 +2,7 @@
 
 This branch is the React implementation of the Tic-Tac-Toe project.
 
-<img src="./public/image.png" alt="Game Screenshot" style="width: 480px;" />
+<img src="./public/image.png" alt="Game Screenshot" style="width: 80%" />
 
 The game is deployed via GitHub Pages and can be accessed here at: [Live Site](https://shubhamcweb.github.io/React-TypeScript-TicTacToe/)
 
